@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load humanize %}
+
+<li feed-id="{{ check.pk }}" csrf="{{ csrf_token }}">
+  <a href="{% url 'profile' check.user.username %}"><img src="{{ check.user.profile.get_picture }}" class="user"></a>
+  <div class="post">
+    {% if check.user == user %}
+      <span class="glyphicon glyphicon-remove remove-feed" title="{% trans 'Click to remove this feed' %}"></span>
+    {% endif %}
+    <h3><a href="{% url 'profile' check.user.username %}">{{ check.user.profile.get_screen_name }}</a> <small>{{ check.date|naturaltime }}</small></h3>
+    
+    <p>{{ check.longitude }}</p>
+    <p>{{ check.linkfy_post|safe }}</p>
+    {% if check.picture  %}
+    	<img src="{{check.picture.url}}"  />
+    {% endif %}
+    
+    <div class="interaction">
+      {% if user in check.get_likers %}
+        <a href="#" class="like unlike">
+          <span class="glyphicon glyphicon-thumbs-up"></span>
+          <span class="text">{% trans 'Unlike' %}</span>
+          (<span class="like-count">{{ check.likes }}</span>)
+        </a>
+      {% else %}
+        <a href="#" class="like">
+          <span class="glyphicon glyphicon-thumbs-up"></span>
+          <span class="text">{% trans 'Like' %}</span>
+          (<span class="like-count">{{ check.likes }}</span>)
+        </a>
+      {% endif %}
+      <a href="#" class="comment">
+        <span class="glyphicon glyphicon-comment"></span> {% trans 'Comment' %}
+        (<span class="comment-count">{{ check.comments }}</span>)
+      </a>
+    </div>
+    <div class="comments">
+      <form role="form" method="post" action="{{ comment }}" onsubmit="return false">
+        {% csrf_token %}
+        <input type="hidden" name="feed" value="{{ check.pk }}">
+        <input type="text" class="form-control input-sm" placeholder="{% trans 'Write a comment...' %}" name="post" maxlength="255">
+      </form>
+      <ol class="clearfix">
+        {% comment %} Place holder to load feed comments {% endcomment %}
+      </ol>
+    </div>
+  </div>
+</li>
