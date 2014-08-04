@@ -9,8 +9,7 @@ from django.contrib.auth.models import User
 class FeedIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=False )
     post = indexes.CharField(model_attr='post')
-    longitude= indexes.FloatField(model_attr='longitude')
-    latitude= indexes.FloatField(model_attr='latitude')
+    location = indexes.LocationField()
     date=indexes.DateTimeField(model_attr='date')
     tags = indexes.MultiValueField( null=True)
 
@@ -23,4 +22,7 @@ class FeedIndex(indexes.SearchIndex, indexes.Indexable):
     
     def prepare_tags(self, obj):
         return [tag.tag for tag in obj.tags.all()]
+    
+    def prepare_location(self, obj):
+        return "%s,%s" % (obj.latitude, obj.longitude)
     

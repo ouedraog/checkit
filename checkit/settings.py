@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'south',
     'haystack',
+    'djcelery',
     'checkit.activities',
     'checkit.articles',
     'checkit.auth',
@@ -119,3 +120,7 @@ ALLOWED_SIGNUP_DOMAINS = ['*']
 
 FILE_UPLOAD_TEMP_DIR = '/tmp/'
 FILE_UPLOAD_PERMISSIONS = 0644
+
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+
+#HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
