@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'checkit.messages',
     'checkit.questions',
     'checkit.search',
+    #'checkit.elastic'
 )
 
 HAYSTACK_CONNECTIONS = {
