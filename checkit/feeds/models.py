@@ -32,6 +32,7 @@ class Feed(models.Model):
     latitude = models.FloatField(default=0)
     all_of_fame = models.BooleanField(default=False)
     visibility = models.BooleanField(default=False)
+    staff_pick=models.BooleanField(default=False)
     tags = models.ManyToManyField(CheckTag,  null=True, blank=True)
 
     class Meta:

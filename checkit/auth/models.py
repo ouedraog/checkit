@@ -9,12 +9,20 @@ from checkit.activities.models import Notification
 
 
 class Profile(models.Model):
+    Male="M"
+    Female="F"
+    Gender = ((Male, 'Male'), (Female, 'Female'),)
+    
     user = models.OneToOneField(User)
+    followers = models.ManyToManyField(User,related_name="_followers",null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
     url = models.CharField(max_length=50, null=True, blank=True)
     job_title = models.CharField(max_length=50, null=True, blank=True)
-    # reputation = models.IntegerField(default=0)
-    # language = models.CharField(max_length=5, default='en')
+    sex = models.CharField(max_length=2, choices=Gender)
+    tel=models.CharField(max_length=50, null=True, blank=True)
+    birthday=models.DateField(null=True, blank=True)
+    photo=models.ImageField(upload_to="user_profiles/", default='users_profiles/default.jpg')
+   
 
     def get_url(self):
         url = self.url

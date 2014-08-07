@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'south',
     'haystack',
     'djcelery',
+    'rest_framework',
     'checkit.activities',
     'checkit.articles',
     'checkit.auth',
@@ -47,8 +48,19 @@ INSTALLED_APPS = (
     'checkit.messages',
     'checkit.questions',
     'checkit.search',
-    #'checkit.elastic'
+    
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
 
 HAYSTACK_CONNECTIONS = {
     'default': {

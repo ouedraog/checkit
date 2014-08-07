@@ -2,7 +2,8 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-
+from checkit.api import api
+from rest_framework.urlpatterns import format_suffix_patterns
 
 admin.autodiscover()
 
@@ -30,4 +31,15 @@ urlpatterns = patterns('',
     url(r'^(?P<username>[^/]+)/$', 'checkit.core.views.profile', name='profile'),
     url(r'^i18n/', include('django.conf.urls.i18n', namespace='i18n')),
     url(r'^search2/', include('haystack.urls')),
+    
+    url(r'^api/feeds/$', api.FeedList.as_view()),
+    url(r'^api/followers_feeds/$', api.FeedList_Follower.as_view()),
+    url(r'^api/feed/(?P<pk>[0-9]+)/$', api.FeedDetail.as_view()),
+    
+    url(r'^api/users/$', api.UserList.as_view()),
+    url(r'^api/user/(?P<pk>[0-9]+)/$', api.UserDetail.as_view()),
+    
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns = format_suffix_patterns(urlpatterns)
+
