@@ -8,6 +8,7 @@ import bleach
 
 from checkit.activities.models import Activity
 from django.forms.fields import NullBooleanField
+from django.utils import timezone
 
 class CheckTag(models.Model):
     tag = models.CharField(max_length=50)
@@ -89,7 +90,3 @@ class Feed(models.Model):
     def linkfy_post(self):
         return bleach.linkify(escape(self.post))
     
-    def get_all_tag(self):
-        list =[x.tag for x in self.tags.all()]
-        print list, self
-        return list

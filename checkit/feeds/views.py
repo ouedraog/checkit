@@ -100,19 +100,11 @@ def post(request):
     csrf_token = unicode(csrf(request)['csrf_token'])
     feed = Feed()
     feed.user = user
-    t1=CheckTag(tag="cool")
-    t2=CheckTag(tag="robot")
-    t1.save()
-    t2.save()
-    
     post = request.POST['post']
     post = post.strip()
     if len(post) > 0:
         feed.post = post[:255]
         feed.save()
-    
-    feed.tags.add(t1)
-    feed.tags.add(t2)
     
     print feed.tags.all(), len(feed.tags.all())
     html = _html_feeds(last_feed, user, csrf_token)
