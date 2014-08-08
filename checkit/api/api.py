@@ -43,7 +43,7 @@ class FeedList_Follower(APIView):
     
     def get(self, request, format=None):
         p=Profile.objects.get(user=request.user)
-        feeds = Feed.objects.filter(user =p.followers.all())
+        feeds = Feed.objects.filter(user =p.followees.all())
         serialized_feeds = FeedSerializer(feeds, many=True)
         return Response(serialized_feeds.data)
 

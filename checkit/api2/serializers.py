@@ -1,45 +1,27 @@
 from rest_framework import serializers
-from checkit.auth.models import Profile
-
 
 class UserSerializer(serializers.Serializer):
-    
     id=serializers.IntegerField()
     username=serializers.CharField(max_length=100)
     email=serializers.EmailField()
     first_name=serializers.CharField(max_length=100)
     last_name=serializers.CharField(max_length=100)
-    tel = serializers.SerializerMethodField('get_tel')
-    location = serializers.SerializerMethodField('get_location')
-    sex=serializers.SerializerMethodField('get_sex')
-    birthday=serializers.SerializerMethodField('get_birthday')
-    photo=serializers.SerializerMethodField('get_photo')
-    followers=serializers.SerializerMethodField('get_followers')
-
     
-    def get_tel(self,obj):
-        return Profile.objects.get(pk=obj.pk).tel
-
-    def get_location(self,obj):
-        return Profile.objects.get(pk=obj.pk).location
-    
-    def get_followers(self,obj):
-        return Profile.objects.get(pk=obj.pk).followers.all()
-    
-    def get_sex(self,obj):
-        return Profile.objects.get(pk=obj.pk).sex
-    
-    def get_birthday(self,obj):
-        return Profile.objects.get(pk=obj.pk).birthday
-    
-    def get_photo(self,obj):
-        return Profile.objects.get(pk=obj.pk).photo.url  
+class ProfileSerializer(serializers.Serializer):
+    id=serializers.IntegerField()
+    user=serializers.RelatedField()
+    job_title=serializers.CharField(max_length=50)
+    tel = serializers.CharField(max_length=50)
+    location = serializers.CharField(max_length=50)
+    sex=serializers.CharField(max_length=2)
+    birthday=serializers.DateField()
+    photo=serializers.ImageField()
+    followees=serializers.ManyRelatedField()
+ 
     
 class FeedSerializer(serializers.Serializer):
     id=serializers.IntegerField()
-    #user = UserSerializer()
     user = serializers.RelatedField()
-
     date = serializers.DateTimeField()
     post = serializers.CharField()
     tags = serializers.ManyRelatedField()
@@ -50,4 +32,20 @@ class FeedSerializer(serializers.Serializer):
     all_of_fame = serializers.BooleanField(default=False)
     visibility = serializers.BooleanField(default=False)
     staff_pick=serializers.BooleanField(default=False)
+    
+class ActivitySerializer(serializers.Serializer):
+    id=serializers.IntegerField()
+    user = serializers.RelatedField()
+    activity_type = serializers.CharField()
+    date = serializers.DateTimeField()
+    feed = serializers.IntegerField()
+    
+class NotificationSerializer(serializers.Serializer):
+    id=serializers.IntegerField()
+    from_user=serializers.RelatedField()
+    to_user = serializers.RelatedField()
+    date = serializers.DateTimeField()
+    feed = serializers.RelatedField()
+    notification_type = serializers.CharField()
+    is_read = serializers.BooleanField()
     

@@ -14,7 +14,7 @@ class Profile(models.Model):
     Gender = ((Male, 'Male'), (Female, 'Female'),)
     
     user = models.OneToOneField(User)
-    followers = models.ManyToManyField(User,related_name="_followers",null=True, blank=True)
+    followees = models.ManyToManyField(User,related_name="_followees",null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
     url = models.CharField(max_length=50, null=True, blank=True)
     job_title = models.CharField(max_length=50, null=True, blank=True)
@@ -23,7 +23,9 @@ class Profile(models.Model):
     birthday=models.DateField(null=True, blank=True)
     photo=models.ImageField(upload_to="user_profiles/", default='users_profiles/default.jpg')
    
-
+    def __unicode__(self):
+        return self.user.username
+    
     def get_url(self):
         url = self.url
         if "http://" not in self.url and "https://" not in self.url and len(self.url) > 0:

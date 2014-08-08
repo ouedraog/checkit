@@ -16,7 +16,7 @@ class UserSerializer(serializers.Serializer):
     sex=serializers.SerializerMethodField('get_sex')
     birthday=serializers.SerializerMethodField('get_birthday')
     photo=serializers.SerializerMethodField('get_photo')
-    followers=serializers.SerializerMethodField('get_followers')
+    followees=serializers.SerializerMethodField('get_followers')
 
     
     def get_tel(self,obj):
@@ -26,7 +26,7 @@ class UserSerializer(serializers.Serializer):
         return Profile.objects.get(pk=obj.pk).location
     
     def get_followers(self,obj):
-        return Profile.objects.get(pk=obj.pk).followers.all()
+        return Profile.objects.get(pk=obj.pk).followees.all()
     
     def get_sex(self,obj):
         return Profile.objects.get(pk=obj.pk).sex
