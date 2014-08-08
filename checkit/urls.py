@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from checkit.api import api
+from checkit.api2 import urls
 from rest_framework.urlpatterns import format_suffix_patterns
 
 admin.autodiscover()
@@ -39,7 +40,9 @@ urlpatterns = patterns('',
     url(r'^api/users/$', api.UserList.as_view()),
     url(r'^api/user/(?P<pk>[0-9]+)/$', api.UserDetail.as_view()),
     
+    url(r'^api2/', include(urls)),
+    
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+#urlpatterns = format_suffix_patterns(urlpatterns)
 
