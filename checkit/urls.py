@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from checkit.api import api
 from checkit.api2 import urls
+from checkit.api3 import url_3
+
 from rest_framework.urlpatterns import format_suffix_patterns
 
 admin.autodiscover()
@@ -41,6 +43,8 @@ urlpatterns = patterns('',
     url(r'^api/user/(?P<pk>[0-9]+)/$', api.UserDetail.as_view()),
     
     url(r'^api2/', include(urls)),
+    
+    url(r'^api3/', include(url_3)),
     
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
