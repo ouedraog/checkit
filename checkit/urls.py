@@ -7,6 +7,8 @@ from checkit.api2 import urls
 from checkit.api3 import url_3
 
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf.urls import include
+import checkit
 
 admin.autodiscover()
 
@@ -45,6 +47,9 @@ urlpatterns = patterns('',
     url(r'^api2/', include(urls)),
     
     url(r'^api3/', include(url_3)),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
+    url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
     
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

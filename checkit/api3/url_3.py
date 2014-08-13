@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^notifications/$', views.NotificationList.as_view()),
     url(r'^mynotifications/$', views.MyNotificationList.as_view()),
     url(r'^notification/(?P<pk>[0-9]+)/$', views.NotificationDetail.as_view()),
+    url(r'^api-login/', views.api_login),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

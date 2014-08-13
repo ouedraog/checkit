@@ -6,12 +6,20 @@ from django.contrib.auth.models import User
 from checkit.api3.serializers import *
 from rest_framework import generics
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login
 
 
+def api_login(request):
+    username = request.GET['username']
+    password = request.GET.get("password")
+    user = authenticate(username=username, password=password)
+    login(request, user)
+    return HttpResponse(user.is_authenticated())
+    
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

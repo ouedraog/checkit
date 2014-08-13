@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'south',
     'haystack',
     'djcelery',
+    'rest_framework.authtoken',
     'rest_framework',
     'checkit.activities',
     'checkit.articles',
