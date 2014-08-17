@@ -137,3 +137,4 @@ FILE_UPLOAD_PERMISSIONS = 0644
 CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
 
 #HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+SESSION_COOKIE_AGE = 360

@@ -3,6 +3,7 @@ from django.conf import settings as django_settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import views as auth_views
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 import os
@@ -19,6 +20,13 @@ def home(request):
         return feeds(request)
     else:
         return render(request, 'core/cover.html')
+
+def login_user(request, template_name='core/cover.html', extra_context=None):
+    response = auth_views.login(request, template_name) 
+    if not request.POST.has_key('remember_me'): 
+        request.session.set_expiry(0)
+        print 'remember me not set'
+    return response
 
 @login_required
 def network(request):

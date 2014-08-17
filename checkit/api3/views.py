@@ -18,6 +18,8 @@ def api_login(request):
     password = request.GET.get("password")
     user = authenticate(username=username, password=password)
     login(request, user)
+    if not request.GET.has_key('remember_me'): 
+        request.session.set_expiry(0)
     return HttpResponse(user.is_authenticated())
     
 class UserList(generics.ListCreateAPIView):
